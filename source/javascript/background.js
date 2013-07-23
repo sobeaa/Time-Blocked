@@ -28,7 +28,7 @@ chrome.runtime.onConnect.addListener(function(port) {
     console.assert(port.name == "tb_runtime");
     port.onMessage.addListener(function(message) {
 
-        if (message.showPageAction === true && port.sender.tab) {
+        if (message.applyTimeBlocked === true && port.sender.tab) {
 
             var domain = getDomain(port.sender.tab.url);
 
@@ -64,7 +64,7 @@ chrome.runtime.onConnect.addListener(function(port) {
                                 d1.setHours(obj6[domain + "_end"].split(":")[0]);
                                 d1.setMinutes(obj6[domain + "_end"].split(":")[1]);
 
-                                if (obj2[domain + "_" + days[d.getDay()]] && d.getHours() <= d1.getHours() && d.getMinutes() <= d1.getMinutes() && d.getHours() >= d2.getHours() && d.getMinutes() >= d2.getMinutes()) {
+                                if (obj2[domain + "_" + days[d.getDay()]] !== false && d.getHours() <= d1.getHours() && d.getMinutes() <= d1.getMinutes() && d.getHours() >= d2.getHours() && d.getMinutes() >= d2.getMinutes()) {
 
                                     port.postMessage({
 

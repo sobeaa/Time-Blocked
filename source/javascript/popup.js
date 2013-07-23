@@ -22,7 +22,7 @@ chrome.tabs.getSelected(null, function (tab) {
 
     currentTab = getDomain(tab.url);
 
-    $("#domain-info").append(" " + currentTab + " <img style='float: right; height: 20px;' src='" + tab.favIconUrl + "'/>");
+    $("#domain-info").append(" " + currentTab + " <img src='" + tab.favIconUrl + "'/>");
 
 });
 

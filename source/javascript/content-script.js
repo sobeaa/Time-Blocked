@@ -18,58 +18,14 @@
 
 var port = chrome.runtime.connect({name: "tb_runtime"});
 
-port.postMessage({"showPageAction": true});
+port.postMessage({"applyTimeBlocked": true});
 port.onMessage.addListener(function(message) {
 
     if (message.blockWebsite) {
 
-        var content = "<div style='background: #FAFAFA; width: 800px; margin: 64px auto 0; border: 1px solid #EFEFEF; border-radius: 16px; padding: 32px;'><h1 style='font: 32px normal \"Segoe UI\", \"Tahoma\", sans-serif; margin: 0;'>" + message.blockTitle + "</h1><hr /><p style='font: 12px normal \"Helvetica\", \"Verdana\", \"Arial\", sans-serif;'>" + message.blockMessage.replace("[domain]", message.blockWebsite) + "</p></div>";
-
-        document.body.innerHTML = content;
-
-        var i = 0, refresh = setInterval(function() {
-
-            i++;
-
-            if (i > 20) {
-
-                clearInterval(refresh);
-                return;
-
-            }
-
-            if (decodeEntities(document.body.innerHTML) !== decodeEntities(content)) {
-
-                document.body.innerHTML = content;
-
-            }
-
-        }, 250);
+        document.head.innerHTML = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/><title>Time Blocked</title>";
+        document.body.innerHTML = "<div style='background: #FFFFFF; position: fixed; top: 0; right: 0; bottom: 0; left: 0;'><div style='background: #FAFAFA; width: 800px; margin: " + ((screen.height / 2) - 160) + "px auto 0; border: 1px solid #EFEFEF; border-radius: 16px; padding: 32px;'><h1 style='font: 32px normal \"Segoe UI\", \"Tahoma\", sans-serif; margin: 0;'>" + message.blockTitle + "</h1><hr /><p style='font: 12px normal \"Helvetica\", \"Verdana\", \"Arial\", sans-serif;'>" + message.blockMessage.replace("[domain]", message.blockWebsite) + "</p></div></div>";
 
     }
 
 });
-
-var decodeEntities = (function() {
-
-    var element = document.createElement("div");
-
-    function decodeHTMLEntities (html) {
-
-        if (html && typeof html === "string") {
-
-            html = html.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, "");
-            html = html.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, "");
-            element.innerHTML = html;
-            html = element.textContent;
-            element.textContent = "";
-
-        }
-
-        return html;
-
-    }
-
-    return decodeHTMLEntities;
-
-})();
