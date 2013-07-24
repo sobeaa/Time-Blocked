@@ -174,6 +174,13 @@ function setCheckbox(input) {
 
             $("#" + input).removeAttr("checked");
 
+        } else {
+
+            var obj2 = {};
+            obj2[key] = $("#" + input).prop("checked");
+
+            chrome.storage.sync.set(obj2);
+
         }
 
     });
