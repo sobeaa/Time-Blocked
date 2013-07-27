@@ -61,10 +61,10 @@ chrome.runtime.onConnect.addListener(function(port) {
                             chrome.storage.sync.get(obj5, function(obj6) {
 
                                 var d2 = new Date();
-                                d1.setHours(obj6[domain + "_end"].split(":")[0]);
-                                d1.setMinutes(obj6[domain + "_end"].split(":")[1]);
+                                d2.setHours(obj6[domain + "_end"].split(":")[0]);
+                                d2.setMinutes(obj6[domain + "_end"].split(":")[1]);
 
-                                if (obj2[domain + "_" + days[d.getDay()]] && d.getHours() <= d1.getHours() && (d.getHours() != d1.getHours() || d.getMinutes() <= d1.getMinutes()) && d.getHours() >= d2.getHours() && (d.getHours() != d2.getHours() || d.getMinutes() >= d2.getMinutes())) {
+                                if (obj2[domain + "_" + days[d.getDay()]] && d.getHours() >= d1.getHours() && (d.getHours() != d1.getHours() || d.getMinutes() >= d1.getMinutes()) && d.getHours() <= d2.getHours() && (d.getHours() != d2.getHours() || d.getMinutes() <= d2.getMinutes())) {
 
                                     port.postMessage({
 
